@@ -1,12 +1,7 @@
 # -*- coding:utf-8; tab-width:4; mode:python -*-
 
-print 'LLEGA'
+const = load ('constants.py')
 
-t = Test ( MAINEXE + ' -v')
+
+t = Test ( const.MAINEXE + ' -v' )
 t.post += FileContains(['Version', 'ImpInstaller', 'Miguel Ángel García'])
-
-
-if __name__ == '__main__':
-    unittest.main()
-else:
-    UnitTestCase()
