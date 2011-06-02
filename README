@@ -1,0 +1,7 @@
+Imp Installer is a python program that builds a TCL/TK program.
+
+This TCL/TK program will be packed with a TCL interpreter and will allow to install your package.
+
+There is no GUI to create the install package. You must learn some python in order to do that. This feature will give you all python power.
+
+TCL scripts will be obtained from InstallJammer, so this ImpInstaller is as free as InstallJammer is. Use it, copy it, give a copy to your friends, re-sell it if you can, and enjoy it.
