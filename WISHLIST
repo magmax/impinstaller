@@ -6,13 +6,13 @@ Lo siento, pero este archivo estará en español.
 Tareas deseables...
 -------------------
 
+-*Con la opción "-v" o "--version" muestra la versión y termina.
+
+-*Se requerirá un archivo de entrada.
+
+-*En el archivo de entrada se debe utilizar el objeto "application".
+
 - Con la opción "-c" o "--code", impinstaller debería generar la salida sin más.
-
-- Con la opción "-v" o "--version" muestra la versión y termina.
-
-- Se requerirá un archivo de entrada.  En el archivo de entrada se
-  debe utilizar el objeto "application", estableciendo el nombre del
-  archivo de salida. Si no se hace así, debe dar un error.
 
 - También son obligatorios: nombre largo de aplicación, nombre corto
   de aplicación, compañía y versión.

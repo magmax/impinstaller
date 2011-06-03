@@ -2,12 +2,12 @@
 
 const = load ('test/constants.py')
 
-t1 = Test ( const.MAINEXE + ' -v' )
-t1.post += FileContains(['version', 'ImpInstaller', 'Miguel Angel Garcia'])
+t1 = Test ( const.MAINEXE + ' --version' )
+t1.post += FileContains(['0.0'])
 
 t2 = Test ( const.MAINEXE + ' -h' )
 t2.post += FileContains(['show this help message and exit',
                          'impinstaller.py',
-                         'show program version and exit'])
+                         "options"])
 
 t3 = Test ( const.MAINEXE, expected=2 )

@@ -23,27 +23,50 @@
 
 import sys
 from optparse import OptionParser
+from Patterns import Singleton
+from log import Log
+import consts
 
-VERSION=['0','0','0','0']
+class Configuration (object):
+    def __init__(self):
+        parser = OptionParser(version=consts.VERSION)
+
+        self.options, self.files = parser.parse_args()
+
+        if len(self.files) != 1:
+            Log.error  ("Incorrect number of arguments")
+            parser.error ("incorrect number of arguments")
+
+class Application (object):
+    __metaclass__ = Singleton
+    __config = Configuration()
+
+    name = None
+    shortname = None
+    company = None
+    version = None
+
+    def run(self):
+        self.__import_files()
+
+        self.__check_mandatory_arguments()
+
+    def __check_mandatory_arguments(self):
+        print self.version
+        if not self.name or not self.shortname \
+                or not self.company or not self.version:
+            Log.error ("Main arguments were not set")
+            raise Exception("Main arguments were not set")
+
+    def __import_files(self):
+        #FIXME
+        pass
+
+
 
 def main ():
-
-    parser = OptionParser()
-    parser.add_option("-v", "--version", action='store_true',
-                  help="show program version and exit")
-
-    (options, args) = parser.parse_args()
-
-    if options.version:
-        print "\tImpInstaller version " + '.'.join(VERSION) + " is FreeSoftware"
-        print "\tBy Miguel Angel Garcia"
-        sys.exit()
-
-    if len(args) < 1:
-        parser.error ("incorrect number of arguments")
-
-    print options
-
+    app = Application()
+    app.run()
 
 if __name__ == '__main__':
     main ()
