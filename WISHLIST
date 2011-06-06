@@ -12,14 +12,26 @@ Tareas deseables...
 
 -*En el archivo de entrada se debe utilizar el objeto "application".
 
-- Con la opción "-c" o "--code", impinstaller debería generar la salida sin más.
-
-- También son obligatorios: nombre largo de aplicación, nombre corto
+-*También son obligatorios: nombre largo de aplicación, nombre corto
   de aplicación, compañía y versión.
+
+- Con la opción "-c" o "--code", impinstaller debería generar la salida sin más.
 
 - A la aplicación se le pueden añadir Acciones.
 
 - Existe la acción "Mostrar Ventana".
+
+- Habrá un objeto "BasicWindow" que contendrá una ventana básica y sobre la que se construirá el resto.
+
+- La ventana básica podrá tener distintos layouts: simple, twocolumns, imageleft, imageright.
+
+- La ventana básica tendrá 3 botones que podrán ocultarse a voluntad: back, next, cancel.
+
+- La ventana básica tendrá un título.
+
+- El instalador puede tener un icono que será el mostrado al cambiar de aplicación (ALT+TAB).
+
+- Las ventanas básicas podrán tener un icono que se muestra al lado del título.
 
 - Se puede crear la "WelcomeScreen", que es una ventana.
 

@@ -21,7 +21,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-import sys
+import sys, os
 from optparse import OptionParser
 from Patterns import Singleton
 from log import Log
@@ -37,36 +37,41 @@ class Configuration (object):
             Log.error  ("Incorrect number of arguments")
             parser.error ("incorrect number of arguments")
 
-class Application (object):
-    __metaclass__ = Singleton
-    __config = Configuration()
-
+class Installer (object):
     name = None
     shortname = None
-    company = None
+    vendor = None
     version = None
 
-    def run(self):
-        self.__import_files()
-
+    def build (self):
         self.__check_mandatory_arguments()
 
+        print 'Building Application: ' + self.name
+
     def __check_mandatory_arguments(self):
-        print self.version
-        if not self.name or not self.shortname \
-                or not self.company or not self.version:
-            Log.error ("Main arguments were not set")
-            raise Exception("Main arguments were not set")
+        assert self.name, 'You must add the Application name'
+        assert self.shortname, 'You must add the Application short name'
+        assert self.vendor, 'You must add the vendor name'
 
-    def __import_files(self):
-        #FIXME
-        pass
 
+class InstructionsReader (object):
+    __config = Configuration()
+
+    def read(self):
+        for filename in self.__config.files:
+            filedata = open (filename)
+            exec filedata
+            filedata.close()
 
 
 def main ():
-    app = Application()
-    app.run()
+    try:
+        reader = InstructionsReader()
+        reader.read()
+    except Exception as e:
+        Log.error ( sys.exc_info()[0] )
+        Log.error ( sys.exc_info()[1:] )
+        exit (2)
 
 if __name__ == '__main__':
     main ()

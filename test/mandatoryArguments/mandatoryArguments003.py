@@ -1,7 +1,9 @@
 # -*- coding:utf-8; tab-width:4; mode:python -*-
 
-from ImpInstaller import Application
+from impinstaller import Installer
 
-application = Application()
-application.name = "test"
-application.shortname = "test"
+installer = Installer()
+installer.name = "test"
+installer.shortname = "test"
+
+installer.build()

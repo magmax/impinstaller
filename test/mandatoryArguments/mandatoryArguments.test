@@ -1,13 +1,21 @@
 # -*- coding:utf-8; tab-width:4; mode:python -*-
 
+import sys,os
+
 const = load ('test/constants.py')
 
-t1 = Test ( const.MAINEXE + ' mandatoryArguments001.py', expected=1 )
+t1 = Test ( const.MAINEXE + ' test/mandatoryArguments/mandatoryArguments001.py', save_stderr=True, expected=2 )
+t1.post += FileContains('You must add the Application name', t1.stderr)
 
-t2 = Test ( const.MAINEXE + ' mandatoryArguments002.py', expected=1 )
+t2 = Test ( const.MAINEXE + ' test/mandatoryArguments/mandatoryArguments002.py', save_stderr=True, expected=2 )
+t2.post += FileContains('You must add the Application short name', t2.stderr)
 
-t3 = Test ( const.MAINEXE + ' mandatoryArguments003.py', expected=1 )
+t3 = Test ( const.MAINEXE + ' test/mandatoryArguments/mandatoryArguments003.py', save_stderr=True, expected=2 )
+t3.post += FileContains('You must add the vendor name', t3.stderr)
 
-t4 = Test ( const.MAINEXE + ' mandatoryArguments004.py', expected=1 )
 
-t5 = Test ( const.MAINEXE + ' mandatoryArguments005.py' )
+t4 = Test ( const.MAINEXE + ' test/mandatoryArguments/mandatoryArguments004.py')
+t4.post += FileContains('Building Application: test')
+
+t5 = Test ( const.MAINEXE + ' test/mandatoryArguments/mandatoryArguments005.py' )
+t5.post += FileContains('Building Application: test')
