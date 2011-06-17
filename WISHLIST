@@ -6,38 +6,76 @@ Lo siento, pero este archivo estará en español.
 Tareas deseables...
 -------------------
 
--*Con la opción "-v" o "--version" muestra la versión y termina.
+- El usuario crea el archivo principal, que tendrá un objeto de tipo
+  ImpInstaller.
 
--*Se requerirá un archivo de entrada.
+- El objeto ImpInstaller puede generar un resultado (build). Para
+  generarlo se le indicará el motor y el directorio donde dejar el
+  resultado
 
--*En el archivo de entrada se debe utilizar el objeto "application".
+- El objeto ImpInstaller admite objetos Component, que pueden ser
+  opcionales u obligatorios.
 
--*También son obligatorios: nombre largo de aplicación, nombre corto
-  de aplicación, compañía y versión.
+- Un Component admite objetos File.
 
-- Con la opción "-c" o "--code", impinstaller debería generar la salida sin más.
+- Un Component tiene un nombre y una descripción. Además, llevará una
+  ruta destino obligatoria.
 
-- A la aplicación se le pueden añadir Acciones.
+- Los objetos File tienen que tener ruta del archivo origen, destino
+  (que puede ser None), al menos.
 
-- Existe la acción "Mostrar Ventana".
+- El objeto ImpInstaller admite Actions.
 
-- Habrá un objeto "BasicWindow" que contendrá una ventana básica y sobre la que se construirá el resto.
+- Hay distintos tipos de Actions, como mostrar la ventana de bienvenida.
 
-- La ventana básica podrá tener distintos layouts: simple, twocolumns, imageleft, imageright.
+- Me gustaría que se pudieran indicar cosas de la siguiente manera:
+  ImpInstallerObj.addAction(action).when(Variable).isEqualTo(Variable).
 
-- La ventana básica tendrá 3 botones que podrán ocultarse a voluntad: back, next, cancel.
+- Debe existir un Action que consista en desplegar los File.
 
-- La ventana básica tendrá un título.
+- Si un File no existe, se mostrará un warning.
 
-- El instalador puede tener un icono que será el mostrado al cambiar de aplicación (ALT+TAB).
+- el objeto ImpInstaller debe admitir una opción que no permita la
+  no-existencia de File.
 
-- Las ventanas básicas podrán tener un icono que se muestra al lado del título.
+- El resultado final debe consistir en un zip autoejecutable.
 
-- Se puede crear la "WelcomeScreen", que es una ventana.
+- Si un File no tiene directorio destino, se utilizará el del
+  Component al que pertenezca.
 
-- El objeto "WelcomeScreen" tendrá un método que generará el código TCL
+Ventanas (window):
+- Bienvenida
+- Licencia
+- Tipo de setup
+- Copiando
+- Setup complete
 
-- Se puede añadir a la aplicación la acción "mostrar ventana" con la pantalla "WelcomeScreen", que generará el código necesario para mostrar la ventana de bienvenida.
+- Seleccionar destino
+- Seleccionar componentes
 
-- [futuro] sin opciones generará el archivo TCL y lo empaquetará junto
-  con los intérpretes, creando el instalador.
+- Splash
+- Información de usuario
+- Entrada de contraseña.
+- Selección de BBDD.
+- Mostrar resultado de la instalación/lo que se va a hacer
+
+Acciones (do):
+- Mostrar ventana
+- Copiar archivos
+- Rollback
+- Desinstalar
+
+- Reemplazar en fichero
+- Crear archivo temporal
+
+- Insertar/modificar/borrar/obtener del registro (sólo windows)
+- Ejecutar un programa externo
+- Ejecutar código LUA
+
+Condiciones (when):
+- comparación
+
+- Puerto ocupado
+
+Variables predefinidas (get):
+- Sistema operativo
