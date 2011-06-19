@@ -33,3 +33,28 @@ class Singleton(type):
 
     def loaded(cls):
         return cls.__instance != None
+
+
+class TypedAttr(object):
+    """
+    Taken from http://crysol.org/es/node/1500
+    """
+
+    def __init__(self, name, cls):
+        self.name = name
+        self.cls = cls
+
+    def __get__(self, obj, objtype):
+        if (obj is None):
+            raise AttributeError
+
+        try:
+            return obj.__dict__[self.name]
+        except KeyError:
+            raise AttributeError
+
+    def __set__(self, obj, val):
+        if not isinstance(val, self.cls):
+            raise TypeError("'%s' given but '%s' expected" % (val.__class__.__name__, self.cls.__name__))
+
+        obj.__dict__[self.name] = val

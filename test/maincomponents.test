@@ -1,0 +1,134 @@
+# -*- coding:utf-8; tab-width:4; mode:python -*-
+
+import sys
+sys.path.insert(0, '$testdir/../impinstaller')
+import unittest
+
+from impinstaller import *
+
+class ImpinstallerTests (unittest.TestCase):
+    def test_initialization(self):
+        installer = ImpInstaller()
+        self.assertTrue (installer)
+
+    def test_has_components(self):
+        installer = ImpInstaller()
+        component = Component('path')
+
+        installer.addComponent(component)
+
+        self.assertEqual (1, len(installer.components), 'Not included')
+        self.assertEqual (component, installer.components[0], 'Inequal')
+
+    def test_components_are_components (self):
+        installer = ImpInstaller()
+
+        self.assertRaises (TypeError, installer.addComponent, 5)
+        self.assertRaises (TypeError, installer.addComponent, 'cadena')
+
+    def test_has_actions(self):
+        installer = ImpInstaller ()
+        action = Action()
+
+        installer.addAction(action)
+        
+        self.assertEqual (1, len(installer.actions))
+        self.assertEqual (action, installer.actions[0])
+
+    def test_actions_are_actions (self):
+        installer = ImpInstaller()
+
+        self.assertRaises (TypeError, installer.addAction, 5)
+        self.assertRaises (TypeError, installer.addAction, 'cadena')
+
+    def test_show_window_is_an_action (self):
+        installer = ImpInstaller ()
+        action = ActionShowWindow ()
+
+        installer.addAction(action)
+        
+        self.assertEqual (1, len(installer.actions))
+        self.assertEqual (action, installer.actions[0])
+        
+        
+
+class ComponentTests (unittest.TestCase):
+    def test_has_mandatory_components (self ):
+        component = Component ('path', mandatory=True)
+
+        self.assertTrue (component)
+        
+    def test_has_files (self):
+        component = Component ('path')
+        impfile = File ('/')
+
+        component.addFile (impfile)
+
+        self.assertEqual (impfile, component.files[0])
+
+    def test_files_must_be_files (self):
+        component = Component('path')
+
+        self.assertRaises ( TypeError, component.addFile, 5 )
+        self.assertRaises ( TypeError, component.addFile, 'cadena' )
+            
+    def test_components_can_have_description (self):
+        component = Component ('path')
+        description = "Example"
+
+        component.description = description
+
+        self.assertEqual (description, component.description)
+
+    def test_components_can_have_name (self):
+        component = Component ('path')
+        name = 'paco'
+        self.assertEqual (component.name, None)
+
+        component.name = name
+
+        self.assertEqual (name, component.name)
+
+class FileTests (unittest.TestCase):
+    def test_files_has_origin (self):
+        path = '/'
+
+        impfile = File (origin=path)
+
+        self.assertEqual ( path, impfile.origin )
+
+
+    def test_files_can_have_target (self):
+        path = '/etc'
+        target = '/usr'
+
+        impfile = File (path, target)
+
+        self.assertEqual ( target, impfile.target)
+
+class ActionTests (unittest.TestCase):
+    def test_actions_have_conditions (self):
+        action = Action ()
+
+        action.when(5)
+
+        self.assertEqual (1, len(action.conditions))
+        self.assertTrue (isinstance(action.conditions[0], Condition))
+
+class ConditionTests (unittest.TestCase):
+    def test_equality_condition (self):
+        value = 5
+        target = 10
+
+        condition = Condition(value)
+        condition.isEqualTo(target)
+
+        self.assertEqual (value, condition.variable)
+        self.assertEqual (target, condition.target)
+
+        
+
+if __name__ == '__main__':
+    unittest.main()
+else:
+    UnitTestCase()

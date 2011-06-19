@@ -22,56 +22,72 @@
 
 
 import sys, os
-from optparse import OptionParser
-from Patterns import Singleton
+from Patterns import Singleton, TypedAttr
 from log import Log
 import consts
 
-class Configuration (object):
+
+class ImpObject(object):
     def __init__(self):
-        parser = OptionParser(version=consts.VERSION)
+        self.name = None
+        self.description = None
 
-        self.options, self.files = parser.parse_args()
+class ImpInstaller(ImpObject):
+    def __init__(self):
+        super(ImpInstaller, self).__init__()
+        self.actions = []
+        self.components = []
 
-        if len(self.files) != 1:
-            Log.error  ("Incorrect number of arguments")
-            parser.error ("incorrect number of arguments")
+    def addComponent (self, component):
+        if not isinstance (component, Component):
+            raise TypeError
+        self.components.append(component)
 
-class Installer (object):
-    name = None
-    shortname = None
-    vendor = None
-    version = None
+    def addAction (self, action):
+        if not isinstance (action, Action):
+            raise TypeError
+        self.actions.append (action)
 
-    def build (self):
-        self.__check_mandatory_arguments()
+class Component(ImpObject):
+    path = TypedAttr ('__path', str) 
 
-        print 'Building Application: ' + self.name
+    def __init__(self, path, mandatory=False):
+        super(Component, self).__init__()
+        self.__path = path
+        self.mandatory = mandatory
+        self.files = []
 
-    def __check_mandatory_arguments(self):
-        assert self.name, 'You must add the Application name'
-        assert self.shortname, 'You must add the Application short name'
-        assert self.vendor, 'You must add the vendor name'
+    def addFile (self, impfile):
+        if not isinstance (impfile, File):
+            raise TypeError
+        self.files.append(impfile)
+
+class File(ImpObject):
+    def __init__(self, origin, target=None):
+        super(File, self).__init__()
+        self.origin = origin
+        self.target = target
+
+class Action(ImpObject):
+    def __init__(self):
+        super(Action, self).__init__()
+        self.conditions = []
 
 
-class InstructionsReader (object):
-    __config = Configuration()
+    def when (self, variable):
+        self.conditions.append (Condition(variable))
 
-    def read(self):
-        for filename in self.__config.files:
-            filedata = open (filename)
-            exec filedata
-            filedata.close()
+class ActionShowWindow (Action):
+    def __init__(self):
+        super(ActionShowWindow, self).__init__()
+        
+class Condition(ImpObject):
+    def __init__(self, variable):
+        super(Condition, self).__init__()
+        self.variable = variable
+        self.type = None
+        self.target = None
 
-
-def main ():
-    try:
-        reader = InstructionsReader()
-        reader.read()
-    except Exception as e:
-        Log.error ( sys.exc_info()[0] )
-        Log.error ( sys.exc_info()[1:] )
-        exit (2)
-
-if __name__ == '__main__':
-    main ()
+    def isEqualTo (self, variable):
+        self.type = 'equality'
+        self.target = variable

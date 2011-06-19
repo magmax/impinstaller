@@ -1,0 +1,38 @@
+# -*- coding:utf-8; tab-width:4; mode:python -*-
+
+import unittest
+from Patterns import TypedAttr
+
+class Test_TypeAttr (unittest.TestCase):
+    def setUp(self):
+        class A(object):
+            b = TypedAttr('__b', int)
+        self.a1 = A()
+
+
+    def test_assign_ok(self):
+        self.a1.b = 1
+
+    def test_assing_fail(self):
+        try:
+            self.a1.b = "hi"
+            self.fail()
+        except TypeError:
+            pass
+
+    def test_2_instances(self):
+        class B(object):
+            b = TypedAttr('__b', str)
+
+        b1 = B()
+        b1.b = 'hi'
+        b2 = B()
+        b2.b = 'bye'
+
+        self.assertEquals(b1.b, 'hi')
+        self.assertEquals(b2.b, 'bye')
+
+if __name__ == '__main__':
+    unittest.main()
+else:
+    UnitTestCase()

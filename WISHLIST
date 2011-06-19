@@ -6,42 +6,50 @@ Lo siento, pero este archivo estará en español.
 Tareas deseables...
 -------------------
 
-- El usuario crea el archivo principal, que tendrá un objeto de tipo
+-*El usuario crea el archivo principal, que tendrá un objeto de tipo
   ImpInstaller.
 
-- El objeto ImpInstaller puede generar un resultado (build). Para
-  generarlo se le indicará el motor y el directorio donde dejar el
-  resultado
-
-- El objeto ImpInstaller admite objetos Component, que pueden ser
+-*El objeto ImpInstaller admite objetos Component, que pueden ser
   opcionales u obligatorios.
 
-- Un Component admite objetos File.
+-*Un Component admite objetos File.
 
-- Un Component tiene un nombre y una descripción. Además, llevará una
+-*Un Component tiene un nombre y una descripción. Además, llevará una
   ruta destino obligatoria.
 
-- Los objetos File tienen que tener ruta del archivo origen, destino
+-*Los objetos File tienen que tener ruta del archivo origen, destino
   (que puede ser None), al menos.
 
-- El objeto ImpInstaller admite Actions.
+-*El objeto ImpInstaller admite Actions.
 
-- Hay distintos tipos de Actions, como mostrar la ventana de bienvenida.
+-*Hay distintos tipos de Actions, como mostrar la ventana de bienvenida.
 
-- Me gustaría que se pudieran indicar cosas de la siguiente manera:
+-*Una Acción puede tener condiciones.
+
+-*Me gustaría que se pudieran indicar cosas de la siguiente manera:
   ImpInstallerObj.addAction(action).when(Variable).isEqualTo(Variable).
 
 - Debe existir un Action que consista en desplegar los File.
 
-- Si un File no existe, se mostrará un warning.
+- Al construir, si un File no existe, se mostrará un warning.
 
 - el objeto ImpInstaller debe admitir una opción que no permita la
-  no-existencia de File.
+  no-existencia de File durante la construcción.
 
 - El resultado final debe consistir en un zip autoejecutable.
 
 - Si un File no tiene directorio destino, se utilizará el del
   Component al que pertenezca.
+
+- El objeto ImpInstaller puede generar un resultado (build). Para
+  generarlo se le indicará el motor y el directorio donde dejar el
+  resultado
+
+- Alguien debe ser capaz de generar el resultado a partir de un
+  ImpInstaller (patrón visitor), aunque el empaquetado se hará en un
+  segundo paso.
+
+- Alguien debe empaquetar dependiendo del SO.
 
 Ventanas (window):
 - Bienvenida
